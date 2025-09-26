@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './CotizacionLanding.css';
 
 interface PriceItem {
@@ -19,29 +19,62 @@ interface TimelineItem {
 }
 
 const CotizacionLanding: React.FC = () => {
-  const priceItems: PriceItem[] = [
+  const [currentVersion, setCurrentVersion] = useState<1 | 2>(1);
+
+  const priceItemsVersion1: PriceItem[] = [
     { icon: '🎯', label: 'Kickoff y Arquitectura', price: '$1.200.000' },
-    { icon: '📱', label: 'Maquetación Responsive', price: '$3.200.000' },
+    { icon: '📱🔍', label: 'Maquetación Responsive + Búsqueda Avanzada', price: '$3.200.000' },
     { icon: '🔗', label: 'Integración CMS/HubSpot', price: '$2.000.000' },
-    { icon: '🔍', label: 'Búsqueda Avanzada', price: '$2.400.000' },
     { icon: '🤖', label: 'Asistente de IA', price: '$3.200.000' },
     { icon: '✅', label: 'QA y Performance', price: '$1.400.000' },
     { icon: '🚀', label: 'Go-live y Handover', price: '$600.000' },
   ];
 
-  const paymentTerms: PaymentTerm[] = [
-    { percentage: '40%', amount: '$5.600.000', description: 'Anticipo inicial' },
-    { percentage: '40%', amount: '$5.600.000', description: 'Entrega staging' },
-    { percentage: '20%', amount: '$2.800.000', description: 'Go-live final' },
+  const priceItemsVersion2: PriceItem[] = [
+    { icon: '🎯', label: 'Kickoff y Arquitectura', price: '$1.200.000' },
+    { icon: '📱🔍', label: 'Maquetación Responsive + Búsqueda Avanzada', price: '$3.200.000' },
+    { icon: '🔗', label: 'Integración CMS/HubSpot', price: '$2.000.000' },
+    { icon: '✅', label: 'QA y Performance', price: '$1.400.000' },
+    { icon: '🚀', label: 'Go-live y Handover', price: '$600.000' },
   ];
 
-  const timeline: TimelineItem[] = [
+  const priceItems = currentVersion === 1 ? priceItemsVersion1 : priceItemsVersion2;
+
+  const totalVersion1 = 11600000;
+  const totalVersion2 = 8400000;
+  const currentTotal = currentVersion === 1 ? totalVersion1 : totalVersion2;
+
+  const paymentTermsVersion1: PaymentTerm[] = [
+    { percentage: '40%', amount: '$4.640.000', description: 'Anticipo inicial' },
+    { percentage: '40%', amount: '$4.640.000', description: 'Entrega staging' },
+    { percentage: '20%', amount: '$2.320.000', description: 'Go-live final' },
+  ];
+
+  const paymentTermsVersion2: PaymentTerm[] = [
+    { percentage: '40%', amount: '$3.360.000', description: 'Anticipo inicial' },
+    { percentage: '40%', amount: '$3.360.000', description: 'Entrega staging' },
+    { percentage: '20%', amount: '$1.680.000', description: 'Go-live final' },
+  ];
+
+  const paymentTerms = currentVersion === 1 ? paymentTermsVersion1 : paymentTermsVersion2;
+
+  const timelineVersion1: TimelineItem[] = [
     { week: 'Semana 1', description: 'Kickoff, análisis de Figma y definición de arquitectura' },
     { week: 'Semanas 2-3', description: 'Maquetación responsive y desarrollo de componentes' },
     { week: 'Semana 4', description: 'Integración con HubSpot CMS y configuración SEO' },
     { week: 'Semana 5-6', description: 'Implementación de búsqueda avanzada y asistente IA' },
     { week: 'Semana 7', description: 'QA integral, optimización y go-live' },
   ];
+
+  const timelineVersion2: TimelineItem[] = [
+    { week: 'Semana 1', description: 'Kickoff, análisis de Figma y definición de arquitectura' },
+    { week: 'Semanas 2-3', description: 'Maquetación responsive y desarrollo de componentes' },
+    { week: 'Semana 4', description: 'Integración con HubSpot CMS y configuración SEO' },
+    { week: 'Semana 5', description: 'Implementación de búsqueda avanzada' },
+    { week: 'Semana 6', description: 'QA integral, optimización y go-live' },
+  ];
+
+  const timeline = currentVersion === 1 ? timelineVersion1 : timelineVersion2;
 
   const handleAcceptQuote = () => {
     window.location.href = 'mailto:Brand-147@hotmail.com?subject=Acepto%20la%20cotización';
@@ -55,6 +88,20 @@ const CotizacionLanding: React.FC = () => {
         </div>
         <h1 className="main-title">Cotización de Servicios</h1>
         <p className="subtitle">Soluciones digitales innovadoras con IA integrada</p>
+        <div className="version-buttons">
+          <button
+            className={`version-btn ${currentVersion === 1 ? 'active' : ''}`}
+            onClick={() => setCurrentVersion(1)}
+          >
+            Versión 1
+          </button>
+          <button
+            className={`version-btn ${currentVersion === 2 ? 'active' : ''}`}
+            onClick={() => setCurrentVersion(2)}
+          >
+            Versión 2
+          </button>
+        </div>
       </header>
 
       <div className="client-info">
@@ -85,10 +132,12 @@ const CotizacionLanding: React.FC = () => {
       <section className="services-section">
         <h2 className="section-title">Características Principales</h2>
         <div className="service-cards">
-          <div className="service-card">
-            <h3>🤖 Asistente IA con OpenAI</h3>
-            <p>Integración completa de asistente inteligente con endpoint serverless seguro, protección de API Key y control de cuotas.</p>
-          </div>
+          {currentVersion === 1 && (
+            <div className="service-card">
+              <h3>🤖 Asistente IA con OpenAI</h3>
+              <p>Integración completa de asistente inteligente con endpoint serverless seguro, protección de API Key y control de cuotas.</p>
+            </div>
+          )}
           <div className="service-card">
             <h3>🚀 Desarrollo en HubSpot</h3>
             <p>Implementación completa con módulos personalizados, CMS integrado, blog optimizado y SEO técnico avanzado.</p>
@@ -118,7 +167,9 @@ const CotizacionLanding: React.FC = () => {
 
       <div className="total-section">
         <h3>Inversión Total</h3>
-        <div className="total-amount">$14.000.000 COP</div>
+        <div className="total-amount">
+          ${currentTotal.toLocaleString('es-CO')} COP
+        </div>
       </div>
 
       <div className="payment-terms">

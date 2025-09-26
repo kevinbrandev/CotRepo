@@ -347,6 +347,39 @@
   margin-bottom: 30px;
 }
 
+.version-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.version-btn {
+  padding: 12px 30px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-light);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.version-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.version-btn.active {
+  background: var(--text-title);
+  color: var(--bg-primary);
+  border-color: var(--text-title);
+  box-shadow: 0 5px 20px rgba(117, 201, 28, 0.4);
+}
+
 .cta-button {
   display: inline-block;
   padding: 15px 40px;
